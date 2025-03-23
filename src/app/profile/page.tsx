@@ -14,9 +14,13 @@ export default function ProfilePage() {
             await axios.get('/api/users/logout')
            
             router.push('/login')
-        } catch (error:any) {
-            console.log(error.message);
-           
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                console.log(" failed", error.message);
+                // toast.error(error.message);
+            } else {
+                console.log(" failed", String(error)); // Convert to string for unknown errors
+            }
         }
     }
 

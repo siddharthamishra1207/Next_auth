@@ -14,7 +14,7 @@ export default function LoginPage() {
         password: "",
        
     })
-    const [buttonDisabled, setButtonDisabled] = React.useState(false);
+    const [, setButtonDisabled] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
 
 
@@ -25,9 +25,13 @@ export default function LoginPage() {
             console.log("Login success", response.data);
           
             router.push("/profile");
-        } catch (error:any) {
-            console.log("Login failed", error.message);
-          
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                console.log("login failed", error.message);
+                // toast.error(error.message);
+            } else {
+                console.log("login failed", String(error)); // Convert to string for unknown errors
+            }
         } finally{
         setLoading(false);
         }
@@ -48,7 +52,7 @@ export default function LoginPage() {
         
         <label htmlFor="email">email</label>
         <input 
-        className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black"
+        className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 "
             id="email"
             type="text"
             value={user.email}
@@ -57,7 +61,7 @@ export default function LoginPage() {
             />
         <label htmlFor="password">password</label>
         <input 
-        className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black"
+        className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-white"
             id="password"
             type="password"
             value={user.password}
